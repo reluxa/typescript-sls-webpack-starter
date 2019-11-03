@@ -1,0 +1,19 @@
+{
+  "name": "typescript-test2",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".\\out\\main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.2",
+    "express": "^4.17.1",
+    "faunadb": "^2.9.3",
+    "nocache": "^2.1.0",
+    "typescript-logging": "^0.6.4",
+    "typescript-rest": "^2.2.2"
+  }
+}
