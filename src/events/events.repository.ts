@@ -1,7 +1,7 @@
 import { Event } from "./events.interface"
 import { query as q } from 'faunadb';
-import { client } from "../FaunaDB"
-import { factory } from "../Config";
+import { client } from "../common/FaunaDB"
+import { factory } from "../common/config";
 
 const log = factory.getLogger("EventsRepository");
 

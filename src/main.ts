@@ -1,6 +1,6 @@
 import express = require('express');
 import { Server } from "typescript-rest";
-import { factory } from "./Config";
+import { factory } from "./common/config";
 import { EventsController } from "./events/events.express.controller";
 
 const log = factory.getLogger("main");

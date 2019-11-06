@@ -1,5 +1,5 @@
 import { Client as FaunaClient, RequestResult } from 'faunadb';
-import { factory } from "./Config";
+import { factory } from "./config";
 
 const log = factory.getLogger("FaunaClientPerformanceObserver");
 
