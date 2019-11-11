@@ -10,9 +10,13 @@ provider:
   runtime: nodejs8.10
 
 functions:
-  hello:
-    handler: src/events/events.lambda.handler.hello
+  getEvent:
+    handler: src/events/events.lambda.handler.getEvent
     events:
       - http:
-          method: get
-          path: hello
+          path: /api/events/{id}
+          method: get         
+          request:
+            parameters:
+              paths:
+                id: false
