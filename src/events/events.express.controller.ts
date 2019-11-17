@@ -1,6 +1,6 @@
 import { Path, GET, PathParam } from "typescript-rest";
-import { EventsRepository } from "./events.repository"
-import { Event } from "./events.interface"
+import { Event, IEventRepository } from "./events.interface"
+import { DIContainer, Types} from "../common/container"
 
 @Path("/api/events")
 export class EventsController {
@@ -8,7 +8,8 @@ export class EventsController {
   @Path(":id")
   @GET
   public sayHello(@PathParam('id') id: number): Promise<Event> {
-    return new EventsRepository().getEvent(id);
+    let eventRepostory: IEventRepository  = DIContainer.get<IEventRepository>(Types.IEventRepository);
+    return eventRepostory.getEvent(id);
   }
 
 }

@@ -7,3 +7,8 @@ export interface Event {
     owner: User;
     creation: Date;
 }
+
+export interface IEventRepository {
+    getEvent(id: number): Promise<Event>;
+    createEvent(event: Event): Promise<Event>;
+}
