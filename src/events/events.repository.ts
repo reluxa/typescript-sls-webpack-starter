@@ -1,14 +1,14 @@
 import { Event, IEventRepository } from "./events.interface"
 import { query as q } from 'faunadb';
 import { client } from "../common/FaunaDB"
-import { factory } from "../common/config";
+import { factory } from "../common/logger";
 import { v1 } from "uuid"
 import { injectable } from "inversify";
 
 const log = factory.getLogger("EventsRepository");
 
 @injectable()
-export class EventRepository implements IEventRepository {
+export class FaunaEventRepository implements IEventRepository {
 
     public getEvent(id: number): Promise<Event> {
         log.debug("Loading event by id: " + id);
