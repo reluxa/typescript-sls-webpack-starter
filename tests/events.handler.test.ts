@@ -6,9 +6,9 @@ import { User } from "../src/users/users.interface"
 import { injectable } from "inversify";
 
 describe('getvent', function () {
-  it('Should call repository when called', async function () {
 
-    let proxyEvent: APIGatewayProxyEvent = {
+  function createEvent(partial: Partial<APIGatewayProxyEvent>): APIGatewayProxyEvent {
+    let event: APIGatewayProxyEvent = {
       body: null,
       headers: {},
       multiValueHeaders: {},
@@ -22,6 +22,12 @@ describe('getvent', function () {
       resource: "event",
       requestContext: <APIGatewayEventRequestContext>{},
     }
+    Object.assign(event, partial);
+    return event;
+  }
+
+
+  it('Should call repository when called', async function () {
 
     @injectable()
     class MockRepository implements IEventRepository {
@@ -44,7 +50,7 @@ describe('getvent', function () {
     DIContainer.unbind(Types.IEventRepository);
     DIContainer.bind<IEventRepository>(Types.IEventRepository).to(MockRepository);
 
-    let response = await getEvent(proxyEvent, <Context>{}, <Callback<APIGatewayProxyResult>>{});
+    let response = await getEvent(createEvent({}), <Context>{}, <Callback<APIGatewayProxyResult>>{});
     expect((<APIGatewayProxyResult>response).statusCode).toEqual(200);
     expect((<APIGatewayProxyResult>response).body).toEqual('{"name":"name","id":"1","venue":"Budapest","owner":{},"creation":"2019-11-20T22:10:52.722Z"}');
   });
