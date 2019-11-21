@@ -5,7 +5,8 @@
   "main": ".\\out\\main.js",
   "scripts": {
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
-    "coverage": "nyc -r text -e .ts -x \"tests/*.test.ts\" npm run test"
+    "coverage": "nyc -r text -e .ts -x \"tests/*.test.ts\" npm run test",
+    "start": "tsc --project tsconfig-no-watch.json && node ./out/src/main.js"
   },
   "author": "",
   "license": "ISC",
@@ -33,6 +34,7 @@
     "ts-loader": "^6.2.1",
     "ts-node": "^8.4.1",
     "typescript": "^3.7.2",
-    "webpack": "^4.41.2"
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   }
 }

@@ -7,7 +7,7 @@ import { injectable } from "inversify";
 
 describe('getvent', function () {
 
-  function createEvent(partial: Partial<APIGatewayProxyEvent>): APIGatewayProxyEvent {
+  function createEvent(partial?: Partial<APIGatewayProxyEvent>): APIGatewayProxyEvent {
     let event: APIGatewayProxyEvent = {
       body: null,
       headers: {},
@@ -22,7 +22,9 @@ describe('getvent', function () {
       resource: "event",
       requestContext: <APIGatewayEventRequestContext>{},
     }
-    Object.assign(event, partial);
+    if (partial) {
+      Object.assign(event, partial);
+    }
     return event;
   }
 
@@ -50,7 +52,7 @@ describe('getvent', function () {
     DIContainer.unbind(Types.IEventRepository);
     DIContainer.bind<IEventRepository>(Types.IEventRepository).to(MockRepository);
 
-    let response = await getEvent(createEvent({}), <Context>{}, <Callback<APIGatewayProxyResult>>{});
+    let response = await getEvent(createEvent(), <Context>{}, <Callback<APIGatewayProxyResult>>{});
     expect((<APIGatewayProxyResult>response).statusCode).toEqual(200);
     expect((<APIGatewayProxyResult>response).body).toEqual('{"name":"name","id":"1","venue":"Budapest","owner":{},"creation":"2019-11-20T22:10:52.722Z"}');
   });
