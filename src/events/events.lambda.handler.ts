@@ -1,5 +1,5 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { Event, IEventRepository, eventFromJson } from "./events.interface"
+import { Event, IEventRepository, baseEventFromJson } from "./events.interface"
 import { DIContainer, Types } from "../common/container"
 
 export const getEvent: APIGatewayProxyHandler = async (event) => {
@@ -29,7 +29,7 @@ export const getEvent: APIGatewayProxyHandler = async (event) => {
 export const createEvent: APIGatewayProxyHandler = async (event) => {
   if (event.body) {
     let eventRepostory = DIContainer.get<IEventRepository>(Types.IEventRepository);
-    let data = eventFromJson(event.body);
+    let data = baseEventFromJson(event.body);
     let response = await eventRepostory.createEvent(data);
     return {
       statusCode: 200,

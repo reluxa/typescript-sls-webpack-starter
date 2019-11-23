@@ -1,7 +1,7 @@
 import { getEvent, createEvent } from "../src/events/events.lambda.handler"
 import { APIGatewayProxyEvent, APIGatewayEventRequestContext, Callback, Context, APIGatewayProxyResult } from "aws-lambda";
 import { DIContainer, Types } from "../src/common/container"
-import { IEventRepository, Event } from "../src/events/events.interface"
+import { IEventRepository, Event, BaseEvent } from "../src/events/events.interface"
 import { User } from "../src/users/users.interface"
 import { injectable } from "inversify";
 
@@ -43,7 +43,7 @@ describe('getvent', function () {
         return Promise.resolve(ev);
       }
 
-      createEvent(event: Event): Promise<Event> {
+      createEvent(event: BaseEvent): Promise<Event> {
         throw new Error("Method not implemented.");
       }
     }
@@ -67,7 +67,7 @@ describe('createEvent', function () {
         throw new Error("Method not implemented.");
       }
 
-      createEvent(event: Event): Promise<Event> {
+      createEvent(event: BaseEvent): Promise<Event> {
         return Promise.resolve(Object.assign(event, {id: "1234",  creation: new Date("2019-11-20T22:10:52.722Z")}));
       }
     }
