@@ -24,7 +24,6 @@ export const getEvent: APIGatewayProxyHandler = async (event) => {
         body: JSON.stringify(response)
       };
     } catch (error) {
-      if (error instanceof NotFound) 
       throw new NotFound("Entry not found");
     }
   }
