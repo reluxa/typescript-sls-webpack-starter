@@ -1,44 +1,47 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { Event, IEventRepository, baseEventFromJson } from "./events.interface"
+import { IEventRepository, baseEventFromJson } from "./events.interface"
 import { DIContainer, Types } from "../common/container"
+import { factory } from "../common/logger";
+import middy from 'middy'
+import { httpErrorHandler } from 'middy/middlewares'
+import { BadRequest, NotFound } from 'http-errors';
+
+const logger = factory.getLogger("EventsRepository")
+
+function getEventRepository():IEventRepository {
+  return DIContainer.get<IEventRepository>(Types.IEventRepository);
+}
 
 export const getEvent: APIGatewayProxyHandler = async (event) => {
-  try {
-    if (event.pathParameters) {
-      let id = event.pathParameters.id;
-      let eventRepostory = DIContainer.get<IEventRepository>(Types.IEventRepository);
-      let response = await eventRepostory.getEvent(parseInt(id));
+  if (!event.pathParameters || !event.pathParameters.id) {
+    throw new BadRequest("Invalid request, id is missing");
+  } else {
+    let id = event.pathParameters.id;
+    try {
+      let response = await getEventRepository().getEvent(parseInt(id));
       return {
         statusCode: 200,
         body: JSON.stringify(response)
       };
-    } else {
-      return {
-        statusCode: 400,
-        body: "Invalid id"
-      };
+    } catch (error) {
+      if (error instanceof NotFound) 
+      throw new NotFound("Entry not found");
     }
-  } catch {
-    return {
-      statusCode: 404,
-      body: "Element Not Found"
-    };
   }
 }
 
+export const middyGetEvent = middy(getEvent);
+middyGetEvent.use(httpErrorHandler({logger: e => {logger.warn(e.message)}}));
+
 export const createEvent: APIGatewayProxyHandler = async (event) => {
   if (event.body) {
-    let eventRepostory = DIContainer.get<IEventRepository>(Types.IEventRepository);
     let data = baseEventFromJson(event.body);
-    let response = await eventRepostory.createEvent(data);
+    let response = await getEventRepository().createEvent(data);
     return {
       statusCode: 200,
       body: JSON.stringify(response)
     };
   } else {
-    return {
-      statusCode: 400,
-      body: "body is not specified"
-    };
+    throw new BadRequest("Request body is missing");
   }
 }

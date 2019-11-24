@@ -11,7 +11,7 @@ provider:
 
 functions:
   getEvent:
-    handler: src/events/events.lambda.handler.getEvent
+    handler: src/events/events.lambda.handler.middyGetEvent
     events:
       - http:
           path: /api/events/{id}
