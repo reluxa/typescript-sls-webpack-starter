@@ -19,6 +19,9 @@ module.exports = {
     path: path.join(__dirname, '.webpack'),
     filename: '[name].js',
   },
+  optimization: {
+      minimize: true
+  },
   target: 'node',
   module: {
     rules: [

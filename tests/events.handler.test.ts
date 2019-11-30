@@ -1,4 +1,4 @@
-import { getEvent, createEvent } from "../src/events/events.lambda.handler"
+import { getEvent, createEvent } from "../src/events/handler"
 import { APIGatewayProxyEvent, APIGatewayEventRequestContext, Callback, Context, APIGatewayProxyResult } from "aws-lambda";
 import { DIContainer, Types } from "../src/common/container"
 import { IEventRepository, Event, BaseEvent } from "../src/events/events.interface"
