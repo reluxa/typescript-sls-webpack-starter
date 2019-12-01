@@ -11,12 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: npm install
+    - name: npm install  
       uses: actions/npm@master
+      working-directory: ./backend
       with:
         args: install
     - name: serverless deploy
       uses: serverless/github-action@master
+      working-directory: ./backend      
       with:
         args: deploy
       env:
