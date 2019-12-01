@@ -19,6 +19,7 @@
     "faunadb": "^2.9.3",
     "inversify": "^5.0.1",
     "middy": "^0.30.5",
+    "middy-autoproxyresponse": "^0.1.0",
     "neverthrow": "^2.1.1",
     "nocache": "^2.1.0",
     "reflect-metadata": "^0.1.13",

@@ -1,9 +1,10 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
+import { APIGatewayProxyHandler, APIGatewayProxyEvent } from 'aws-lambda';
 import { IEventRepository, baseEventFromJson } from "./events.interface"
 import { DIContainer, Types } from "../common/container"
 import { factory } from "../common/logger";
 import middy from 'middy'
 import { httpErrorHandler } from 'middy/middlewares'
+import { autoProxyResponse } from 'middy-autoproxyresponse'
 import { BadRequest, NotFound } from 'http-errors';
 
 const logger = factory.getLogger("EventsRepository")
@@ -12,17 +13,12 @@ function getEventRepository():IEventRepository {
   return DIContainer.get<IEventRepository>(Types.IEventRepository);
 }
 
-export const getEvent: APIGatewayProxyHandler = async (event) => {
+export async function getEvent(event: APIGatewayProxyEvent) {
   if (!event.pathParameters || !event.pathParameters.id) {
     throw new BadRequest("Invalid request, id is missing");
   } else {
-    let id = event.pathParameters.id;
     try {
-      let response = await getEventRepository().getEvent(parseInt(id));
-      return {
-        statusCode: 200,
-        body: JSON.stringify(response)
-      };
+      return await getEventRepository().getEvent(parseInt(event.pathParameters.id));
     } catch (error) {
       throw new NotFound("Entry not found");
     }
@@ -30,6 +26,7 @@ export const getEvent: APIGatewayProxyHandler = async (event) => {
 }
 
 export const middyGetEvent = middy(getEvent);
+middyGetEvent.use(autoProxyResponse());
 middyGetEvent.use(httpErrorHandler({logger: e => {logger.warn(e.message)}}));
 
 export const createEvent: APIGatewayProxyHandler = async (event) => {

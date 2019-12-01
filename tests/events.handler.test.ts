@@ -51,9 +51,14 @@ describe('getvent', function () {
     DIContainer.unbind(Types.IEventRepository);
     DIContainer.bind<IEventRepository>(Types.IEventRepository).to(MockRepository);
 
-    let response = <APIGatewayProxyResult>await getEvent(proxyEvent(), <Context>{}, <Callback<APIGatewayProxyResult>>{});
-    expect(response.statusCode).toEqual(200);
-    expect(response.body).toEqual('{"name":"name","id":"1","venue":"Budapest","owner":{},"creation":"2019-11-20T22:10:52.722Z"}');
+    let response = await getEvent(proxyEvent());
+    expect(response).toEqual({
+      name:"name",
+      id:"1",
+      venue:"Budapest",
+      owner: <User>{},
+      creation: new Date("2019-11-20T22:10:52.722Z")
+    });
   });
 
 });
