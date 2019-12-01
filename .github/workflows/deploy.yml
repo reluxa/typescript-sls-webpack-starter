@@ -6,21 +6,34 @@ on:
       - master
         
 jobs:
-  deploy:
-    name: deploy
+  deploy:    
+    
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]    
+    
+    name: deploy
+
     steps:
     - uses: actions/checkout@master
-    - name: npm install  
-      uses: actions/npm@master
-      working-directory: ./backend
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
       with:
-        args: install
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build, and test
+      working-directory: ./backend
+      run: |
+        npm ci
+        npm test
+      env:
+        CI: true
     - name: serverless deploy
-      uses: serverless/github-action@master
-      working-directory: ./backend      
+      uses: aaronpanch/action-serverless@master
       with:
         args: deploy
       env:
+        SERVICE_ROOT: ./backend
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
