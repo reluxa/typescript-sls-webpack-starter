@@ -2,11 +2,11 @@
 
 ## Frontend
 
-
 * [x] add typescript + vue + vuex + vuetify
 * [ ] add unit tests
 * [ ] wire the FE with the backend
 * [ ] deployment of the frontend
+* [ ] add gzip compression
 
 ## Backend
 
