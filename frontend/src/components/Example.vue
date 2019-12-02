@@ -18,22 +18,22 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "Example",
+  name: 'Example',
 
   data: () => ({
     events: [
       {
-        name: "Hello",
-        location: "Szeged"
+        name: 'Hello',
+        location: 'Szeged',
       },
       {
-        name: "Other Event",
-        location: "Budapest"
-      }
-    ]
-  })
+        name: 'Other Event',
+        location: 'Budapest',
+      },
+    ],
+  }),
 });
 </script>
