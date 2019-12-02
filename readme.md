@@ -1,7 +1,16 @@
 # Typescript backend kickstarter
 
+## Frontend
 
-## Technologies 
+
+* [x] add typescript + vue + vuex + vuetify
+* [ ] add unit tests
+* [ ] wire the FE with the backend
+* [ ] deployment of the frontend
+
+## Backend
+
+### Technologies 
 
 * [x] add typescript
 * [x] expose rest endpoints using express
@@ -14,12 +23,13 @@
 * [ ] add mocking framework
 * [ ] introduce middleware for error handling
 * [ ] share model classes with frontend
+* [ ] enable CORS
 
-## Features
+### Features
 
-## Deployment
+### Deployment
 
-## Database
+### Database
 
 * [x] Add faunadb repository
 * [ ] Implement event store in S3
