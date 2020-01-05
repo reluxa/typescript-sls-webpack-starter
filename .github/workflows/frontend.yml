@@ -24,6 +24,8 @@ jobs:
         npm run build
       env:
         CI: true
+    - name: create CNAME file
+      run: echo "nevezes.reluxa.org" >./frontend/dist/CNAME
     - name: Deploy
       if: success()
       uses: crazy-max/ghaction-github-pages@v1
