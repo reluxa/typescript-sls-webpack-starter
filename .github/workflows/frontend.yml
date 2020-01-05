@@ -1,4 +1,4 @@
-name: Node CI
+name: Frontend Deploy
 
 on: [push]
 
